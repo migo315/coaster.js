@@ -11,10 +11,9 @@
 import Axios from 'axios';
 import _ from 'lodash';
 
-// Constants
-const BASE_URL = 'https://coaster-platform.org/api';
+export default {
+    baseUrl: 'https://coaster-platform.org/api',
 
-module.export = {
     // Get parks list by optional config or null on failure
     async getParks(config = {}) {
         let result = null;
@@ -36,7 +35,7 @@ module.export = {
         );
 
         try {
-            let response = await Axios.get(BASE_URL + '/parks' + '?' + this.buildQuery(config).join('&'));
+            let response = await Axios.get(this.baseUrl + '/parks' + '?' + this.buildQuery(config).join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -50,7 +49,7 @@ module.export = {
         let result = null;
 
         try {
-            let response = await Axios.get(BASE_URL + '/parks/' + uuid);
+            let response = await Axios.get(this.baseUrl + '/parks/' + uuid);
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -80,7 +79,7 @@ module.export = {
         );
 
         try {
-            let response = await Axios.get(BASE_URL + '/attractions' + '?' + this.buildQuery(config).join('&'));
+            let response = await Axios.get(this.baseUrl + '/attractions' + '?' + this.buildQuery(config).join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -94,7 +93,7 @@ module.export = {
         let result = null;
 
         try {
-            let response = await Axios.get(BASE_URL + '/attractions/' + uuid);
+            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid);
             result = response.data;
         } catch (error) {
             console.error(error)
