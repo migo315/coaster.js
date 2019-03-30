@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/migo315/capi.js.git"
+    "url": "git+https://github.com/migo315/coaster-platform.js.git"
   },
   "author": "Michel Chowanski",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/migo315/capi.js/issues"
+    "url": "https://github.com/migo315/coaster-platform.js/issues"
   },
-  "homepage": "https://github.com/migo315/capi.js#readme",
+  "homepage": "https://github.com/migo315/coaster-platform.js#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.11"
