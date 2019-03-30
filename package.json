@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/migo315/coaster-platform.js/issues"
   },
-  "homepage": "https://github.com/migo315/coaster-platform.js#readme",
+  "homepage": "https://github.com/migo315/coaster-platform.js#readme.md",
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.11"
