@@ -1,6 +1,6 @@
 {
   "name": "coaster-platform.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Javascript library for fetching data from coaster-platform.org",
   "main": "index.js",
   "scripts": {

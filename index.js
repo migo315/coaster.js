@@ -138,7 +138,7 @@ export default {
         }
 
         try {
-            let response = await Axios.get(BASE_URL + '/logs' + '?' + query.join('&'));
+            let response = await Axios.get(this.baseUrl + '/logs' + '?' + query.join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
