@@ -11,10 +11,9 @@
 import Axios from 'axios';
 import _ from 'lodash';
 
-// Constants
-const BASE_URL = 'https://coaster-platform.org/api';
+export default {
+    baseUrl: 'https://coaster-platform.org/api',
 
-module.export = {
     // Get parks list by optional config or null on failure
     async getParks(config = {}) {
         let result = null;
@@ -27,6 +26,7 @@ module.export = {
                 searchTerm: null,
                 filters: [],
                 facets: [],
+                founded: null,
                 regulation: {
                     size: null,
                     age: null
@@ -36,7 +36,7 @@ module.export = {
         );
 
         try {
-            let response = await Axios.get(BASE_URL + '/parks' + '?' + this.buildQuery(config).join('&'));
+            let response = await Axios.get(this.baseUrl + '/parks' + '?' + this.buildQuery(config).join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -50,7 +50,7 @@ module.export = {
         let result = null;
 
         try {
-            let response = await Axios.get(BASE_URL + '/parks/' + uuid);
+            let response = await Axios.get(this.baseUrl + '/parks/' + uuid);
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -71,6 +71,7 @@ module.export = {
                 searchTerm: null,
                 filters: [],
                 facets: [],
+                founded: null,
                 regulation: {
                     size: null,
                     age: null
@@ -80,7 +81,7 @@ module.export = {
         );
 
         try {
-            let response = await Axios.get(BASE_URL + '/attractions' + '?' + this.buildQuery(config).join('&'));
+            let response = await Axios.get(this.baseUrl + '/attractions' + '?' + this.buildQuery(config).join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -94,7 +95,7 @@ module.export = {
         let result = null;
 
         try {
-            let response = await Axios.get(BASE_URL + '/attractions/' + uuid);
+            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid);
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -170,6 +171,11 @@ module.export = {
         config.filters.forEach(function (filter) {
             query.push('filter[]=' + encodeURIComponent(filter));
         });
+
+        if (config.founded !== null && (/^\d{4}$/.test(config.founded))) {
+            let year = config.founded;
+            query.push('filter[]=' + encodeURIComponent(`founded:${year}0101000000 TO ${year}1231235959`));
+        }
 
         return query;
     }
