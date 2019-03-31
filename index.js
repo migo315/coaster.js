@@ -26,6 +26,7 @@ export default {
                 searchTerm: null,
                 filters: [],
                 facets: [],
+                founded: null,
                 regulation: {
                     size: null,
                     age: null
@@ -70,6 +71,7 @@ export default {
                 searchTerm: null,
                 filters: [],
                 facets: [],
+                founded: null,
                 regulation: {
                     size: null,
                     age: null
@@ -169,6 +171,11 @@ export default {
         config.filters.forEach(function (filter) {
             query.push('filter[]=' + encodeURIComponent(filter));
         });
+
+        if (config.founded !== null && (/^\d{4}$/.test(config.founded))) {
+            let year = config.founded;
+            query.push('filter[]=' + encodeURIComponent(`founded:${year}0101000000 TO ${year}1231235959`));
+        }
 
         return query;
     }
