@@ -90,6 +90,37 @@ export default {
         return result;
     },
 
+    // Get attractions list from given park by optional config or null on failure
+    async getParkAttractions(parkId, config = {}) {
+        let result = null;
+
+        // Set default config
+        config = _.merge(
+            {
+                page: 1,
+                itemsPerPage: 12,
+                searchTerm: null,
+                filters: [],
+                facets: [],
+                founded: null,
+                regulation: {
+                    size: null,
+                    age: null
+                }
+            },
+            config
+        );
+
+        try {
+            let response = await Axios.get(this.baseUrl + '/parks/' + parkId + '/attractions' + '?' + this.buildQuery(config).join('&'));
+            result = response.data;
+        } catch (error) {
+            console.error(error)
+        }
+
+        return result;
+    },
+
     // Get specific attraction by uuid or null on failure
     async getAttraction(uuid) {
         let result = null;
