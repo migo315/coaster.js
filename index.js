@@ -50,8 +50,22 @@ export default {
     async getPark(uuid) {
         let result = null;
 
+        let query = [];
+        if (this.withAcl === true) {
+            query.push('acl=true');
+        }
+
+        let params = '';
+        if (query.length > 0) {
+            params = '?' + query.join('&');
+        }
+
+        console.log(this.withAcl);
+        console.log(query);
+        console.log(params);
+
         try {
-            let response = await Axios.get(this.baseUrl + '/parks/' + uuid);
+            let response = await Axios.get(this.baseUrl + '/parks/' + uuid + params);
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -126,8 +140,18 @@ export default {
     async getAttraction(uuid) {
         let result = null;
 
+        let query = [];
+        if (this.withAcl === true) {
+            query.push('acl=true');
+        }
+
+        let params = '';
+        if (query.length > 0) {
+            params = '?' + query.join('&');
+        }
+
         try {
-            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid);
+            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid + params);
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -167,6 +191,10 @@ export default {
 
         if (config.order) {
             query.push('order=' + encodeURIComponent(config.order));
+        }
+
+        if (this.withAcl === true) {
+            query.push('acl=true');
         }
 
         try {
