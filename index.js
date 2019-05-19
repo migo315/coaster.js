@@ -13,6 +13,7 @@ import _ from 'lodash';
 
 export default {
     baseUrl: 'https://coaster-platform.org/api',
+    withAcl: false,
 
     // Get parks list by optional config or null on failure
     async getParks(config = {}) {
@@ -206,6 +207,10 @@ export default {
         if (config.founded !== null && (/^\d{4}$/.test(config.founded))) {
             let year = config.founded;
             query.push('filter[]=' + encodeURIComponent(`founded:${year}0101000000 TO ${year}1231235959`));
+        }
+
+        if (this.withAcl === true) {
+            query.push('acl=true');
         }
 
         return query;
