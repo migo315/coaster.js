@@ -60,10 +60,6 @@ export default {
             params = '?' + query.join('&');
         }
 
-        console.log(this.withAcl);
-        console.log(query);
-        console.log(params);
-
         try {
             let response = await Axios.get(this.baseUrl + '/parks/' + uuid + params);
             result = response.data;
@@ -160,7 +156,6 @@ export default {
         return result;
     },
 
-
     // Get audit logs list by optional config or null on failure
     async getLogs(config = {}) {
         let result = null;
@@ -198,7 +193,38 @@ export default {
         }
 
         try {
-            let response = await Axios.get(this.baseUrl + '/logs' + '?' + query.join('&'));
+            let response = await Axios.get(this.baseUrl + '/activity/logs' + '?' + query.join('&'));
+            result = response.data;
+        } catch (error) {
+            console.error(error)
+        }
+
+        return result;
+    },
+
+    // Get statistics by optional config or null on failure
+    async getStatistics(config = {}) {
+        let result = null;
+
+        // Set default config
+        config = _.merge(
+            {
+                reference: null
+            },
+            config
+        );
+
+        let query = [];
+        if (config.reference) {
+            query.push('reference=' + encodeURIComponent(config.reference));
+        }
+
+        if (this.withAcl === true) {
+            query.push('acl=true');
+        }
+
+        try {
+            let response = await Axios.get(this.baseUrl + '/activity/statistics' + '?' + query.join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
