@@ -70,6 +70,29 @@ export default {
         return result;
     },
 
+    // Get queue times for specific park by uuid or null on failure
+    async getParkQueueTimes(uuid, limit = 10) {
+        let result = null;
+
+        let query = [
+            'limit=' + limit
+        ];
+
+        let params = '';
+        if (query.length > 0) {
+            params = '?' + query.join('&');
+        }
+
+        try {
+            let response = await Axios.get(this.baseUrl + '/parks/' + uuid  + '/queue-times' + params);
+            result = response.data;
+        } catch (error) {
+            console.error(error)
+        }
+
+        return result;
+    },
+
     // Get attractions list by optional config or null on failure
     async getAttractions(config = {}) {
         let result = null;
