@@ -1,5 +1,5 @@
 /*
- * This file is part of coaster-platform.org.
+ * This file is part of coaster.cloud.
  *
  * (c) Michel Chowanski <michel@chowanski.de>
  *
@@ -12,7 +12,7 @@ import Axios from 'axios';
 import _ from 'lodash';
 
 export default {
-    baseUrl: 'https://coaster-platform.org/api',
+    baseUrl: 'https://coaster.cloud/api',
     withAcl: false,
 
     // Get parks list by optional config or null on failure

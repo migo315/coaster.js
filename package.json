@@ -1,21 +1,21 @@
 {
-  "name": "coaster-platform.js",
+  "name": "coaster.js",
   "version": "0.0.10",
-  "description": "Javascript library for fetching data from coaster-platform.org",
+  "description": "Javascript library for fetching data from https://coaster.cloud",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/migo315/coaster-platform.js.git"
+    "url": "git+https://github.com/migo315/coaster.js.git"
   },
   "author": "Michel Chowanski",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/migo315/coaster-platform.js/issues"
+    "url": "https://github.com/migo315/coaster.js/issues"
   },
-  "homepage": "https://github.com/migo315/coaster-platform.js#readme.md",
+  "homepage": "https://github.com/migo315/coaster.js#readme.md",
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.11"

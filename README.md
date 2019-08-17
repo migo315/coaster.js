@@ -1,16 +1,16 @@
-# coaster-platform.js
+# Coaster.Cloud Javascript SDK
 This is a javascript library for fetching attraction and themepark data from the
-official [coaster-platform.org](https://coaster-platform.org) api.
+official [coaster.cloud](https://coaster.cloud) api.
 
 This library is currently in early development. Contribution is welcome.
 
 ## Installation
 ```
-yarn add coaster-platform.js
+yarn add coaster.js
 ```
 
 ```
-npm install coaster-platform.js
+npm install coaster.js
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ Some short examples for fetching data.
 
 ### Fetching parks from germany
 ```
-import capi from 'coaster-platform.js';
+import capi from 'coaster.js';
 
 let config = {
     filters: [
@@ -37,9 +37,9 @@ capi.getParks(config).then(function (data) {
 
 ### Fetch "movie park germany"
 ```
-import capi from 'coaster-platform.js';
+import capi from 'coaster.js';
 
-// That's the id of movie park at coaster-platform.org
+// That's the id of movie park at coaster.cloud
 // Every park and attraction has an unique id
 let parkUuid = 'a5fb81f1-cc4e-4a7e-8419-98cc523487e3';
 
@@ -52,9 +52,9 @@ capi.getPark(parkUuid).then(function (park) {
 
 ### Fetching attractions from "movie park germany"
 ```
-import capi from 'coaster-platform.js';
+import capi from 'coaster.js';
 
-// That's the id of movie park at coaster-platform.org
+// That's the id of movie park at coaster.cloud
 // Every park and attraction has an unique id
 let parkUuid = 'a5fb81f1-cc4e-4a7e-8419-98cc523487e3';
 
