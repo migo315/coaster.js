@@ -25,6 +25,7 @@ export default {
                 page: 1,
                 itemsPerPage: 12,
                 searchTerm: null,
+                sort: null,
                 filters: [],
                 facets: [],
                 founded: null,
@@ -103,6 +104,7 @@ export default {
                 page: 1,
                 itemsPerPage: 12,
                 searchTerm: null,
+                sort: null,
                 filters: [],
                 facets: [],
                 founded: null,
@@ -134,6 +136,7 @@ export default {
                 page: 1,
                 itemsPerPage: 12,
                 searchTerm: null,
+                sort: null,
                 filters: [],
                 facets: [],
                 founded: null,
@@ -264,6 +267,10 @@ export default {
 
         if (config.searchTerm) {
             query.push('search=' + encodeURIComponent(config.searchTerm));
+        }
+
+        if (config.sort) {
+            query.push('sort=' + encodeURIComponent(config.sort));
         }
 
         if (config.regulation.size !== null || config.regulation.age !== null) {
