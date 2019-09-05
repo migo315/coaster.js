@@ -8,10 +8,10 @@
  */
 
 // Imports
-import Axios from 'axios';
-import _ from 'lodash';
+const Axios = require('axios');
+const _ = require('lodash');
 
-export default {
+module.exports = {
     baseUrl: 'https://api.coaster.cloud',
     withAcl: false,
 

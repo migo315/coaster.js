@@ -18,7 +18,7 @@ Some short examples for fetching data.
 
 ### Fetching parks from germany
 ```
-import capi from 'coaster.js';
+const capi = require("coaster.js");
 
 let config = {
     filters: [
@@ -37,7 +37,7 @@ capi.getParks(config).then(function (response) {
 
 ### Fetch "Movie Park Germany"
 ```
-import capi from 'coaster.js';
+const capi = require("coaster.js");
 
 // That's the id of movie park at coaster.cloud
 // Every park and attraction has an unique id
@@ -52,7 +52,7 @@ capi.getPark(parkUuid).then(function (response) {
 
 ### Fetching attractions from "Movie Park Germany"
 ```
-import capi from 'coaster.js';
+const capi = require("coaster.js");
 
 // That's the id of movie park at coaster.cloud
 // Every park and attraction has an unique id
@@ -73,7 +73,7 @@ capi.getAttractions(config).then(function (response) {
 
 ### Fetching waiting times from "Efteling"
 ```
-import capi from 'coaster.js';
+const capi = require("coaster.js");
 
 // That's the id of efteling at coaster.cloud
 // Every park and attraction has an unique id
