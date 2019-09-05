@@ -26,16 +26,16 @@ let config = {
     ]
 };
 
-capi.getParks(config).then(function (data) {
-    if (data !== null) {
-        data.items.forEach(function (park) {
+capi.getParks(config).then(function (response) {
+    if (response !== null) {
+        response.data.forEach(function (park) {
           console.log(park.name);
       });
     }
 });
 ```
 
-### Fetch "movie park germany"
+### Fetch "Movie Park Germany"
 ```
 import capi from 'coaster.js';
 
@@ -43,14 +43,14 @@ import capi from 'coaster.js';
 // Every park and attraction has an unique id
 let parkUuid = 'a5fb81f1-cc4e-4a7e-8419-98cc523487e3';
 
-capi.getPark(parkUuid).then(function (park) {
-    if (park !== null) {
-        console.log(park.name);
+capi.getPark(parkUuid).then(function (response) {
+    if (response !== null) {
+        console.log(response.data.name);
     }
 });
 ```
 
-### Fetching attractions from "movie park germany"
+### Fetching attractions from "Movie Park Germany"
 ```
 import capi from 'coaster.js';
 
@@ -59,14 +59,29 @@ import capi from 'coaster.js';
 let parkUuid = 'a5fb81f1-cc4e-4a7e-8419-98cc523487e3';
 
 let config = {
-    filters: [
-        `park: "${parkUuid}"`
-    ]
+    park: parkUuid
 };
 
-capi.getAttractions(config).then(function (data) {
-    if (data !== null) {
-        data.items.forEach(function (attraction) {
+capi.getAttractions(config).then(function (response) {
+    if (response !== null) {
+        response.data.forEach(function (attraction) {
+          console.log(attraction.name);
+      });
+    }
+});
+```
+
+### Fetching waiting times from "Efteling"
+```
+import capi from 'coaster.js';
+
+// That's the id of efteling at coaster.cloud
+// Every park and attraction has an unique id
+let parkUuid = '49f00560-9b8d-4c11-a3ed-f548192ef5d9';
+
+capi.getWaitingTimes(parkUuid).then(function (response) {
+    if (response !== null) {
+        response.data.forEach(function (attraction) {
           console.log(attraction.name);
       });
     }

@@ -12,7 +12,7 @@ import Axios from 'axios';
 import _ from 'lodash';
 
 export default {
-    baseUrl: 'https://coaster.cloud/api',
+    baseUrl: 'https://api.coaster.cloud',
     withAcl: false,
 
     // Get parks list by optional config or null on failure
@@ -71,21 +71,12 @@ export default {
         return result;
     },
 
-    // Get queue times for specific park by uuid or null on failure
-    async getParkQueueTimes(uuid, limit = 10) {
+    // Get waiting times for specific park by uuid or null on failure
+    async getWaitingTimes(uuid) {
         let result = null;
 
-        let query = [
-            'limit=' + limit
-        ];
-
-        let params = '';
-        if (query.length > 0) {
-            params = '?' + query.join('&');
-        }
-
         try {
-            let response = await Axios.get(this.baseUrl + '/parks/' + uuid  + '/queue-times' + params);
+            let response = await Axios.get(this.baseUrl + '/parks/' + uuid  + '/waiting-times');
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -101,6 +92,7 @@ export default {
         // Set default config
         config = _.merge(
             {
+                park: null,
                 page: 1,
                 itemsPerPage: 12,
                 searchTerm: null,
@@ -115,41 +107,16 @@ export default {
             },
             config
         );
+
+        let url = null;
+        if (config.park) {
+            url = this.baseUrl + '/parks/' + config.park + '/attractions' + '?' + this.buildQuery(config).join('&');
+        } else {
+            url = this.baseUrl + '/attractions' + '?' + this.buildQuery(config).join('&');
+        }
 
         try {
             let response = await Axios.get(this.baseUrl + '/attractions' + '?' + this.buildQuery(config).join('&'));
-            result = response.data;
-        } catch (error) {
-            console.error(error)
-        }
-
-        return result;
-    },
-
-    // Get attractions list from given park by optional config or null on failure
-    async getParkAttractions(parkId, config = {}) {
-        let result = null;
-
-        // Set default config
-        config = _.merge(
-            {
-                page: 1,
-                itemsPerPage: 12,
-                searchTerm: null,
-                sort: null,
-                filters: [],
-                facets: [],
-                founded: null,
-                regulation: {
-                    size: null,
-                    age: null
-                }
-            },
-            config
-        );
-
-        try {
-            let response = await Axios.get(this.baseUrl + '/parks/' + parkId + '/attractions' + '?' + this.buildQuery(config).join('&'));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -182,76 +149,18 @@ export default {
         return result;
     },
 
-    // Get audit logs list by optional config or null on failure
-    async getLogs(config = {}) {
-        let result = null;
-
-        // Set default config
-        config = _.merge(
-            {
-                page: 1,
-                itemsPerPage: 12,
-                reference: null,
-                contributor: null,
-                order: null,
-            },
-            config
-        );
-
-        let query = [];
-        query.push('page=' + encodeURIComponent(config.page));
-        query.push('itemsPerPage=' + encodeURIComponent(config.itemsPerPage));
-
-        if (config.reference) {
-            query.push('reference=' + encodeURIComponent(config.reference));
-        }
-
-        if (config.contributor) {
-            query.push('contributor=' + encodeURIComponent(config.contributor));
-        }
-
-        if (config.order) {
-            query.push('order=' + encodeURIComponent(config.order));
-        }
-
-        if (this.withAcl === true) {
-            query.push('acl=true');
-        }
+    // Add waiting times for a park / return true on success otherwise false
+    async addWaitingTimes(token, park, queues) {
+        let result = false;
+        let config = {
+            headers: {
+                'X-Auth-Token': token
+            }
+        };
 
         try {
-            let response = await Axios.get(this.baseUrl + '/activity/logs' + '?' + query.join('&'));
-            result = response.data;
-        } catch (error) {
-            console.error(error)
-        }
-
-        return result;
-    },
-
-    // Get statistics by optional config or null on failure
-    async getStatistics(config = {}) {
-        let result = null;
-
-        // Set default config
-        config = _.merge(
-            {
-                reference: null
-            },
-            config
-        );
-
-        let query = [];
-        if (config.reference) {
-            query.push('reference=' + encodeURIComponent(config.reference));
-        }
-
-        if (this.withAcl === true) {
-            query.push('acl=true');
-        }
-
-        try {
-            let response = await Axios.get(this.baseUrl + '/activity/statistics' + '?' + query.join('&'));
-            result = response.data;
+            await Axios.post(this.baseUrl + '/parks/' + park + '/waiting-times', queues, config);
+            result = true;
         } catch (error) {
             console.error(error)
         }
