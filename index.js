@@ -19,26 +19,8 @@ module.exports = {
     async getParks(config = {}) {
         let result = null;
 
-        // Set default config
-        config = _.merge(
-            {
-                page: 1,
-                itemsPerPage: 12,
-                searchTerm: null,
-                sort: null,
-                filters: [],
-                facets: [],
-                founded: null,
-                regulation: {
-                    size: null,
-                    age: null
-                }
-            },
-            config
-        );
-
         try {
-            let response = await Axios.get(this.baseUrl + '/parks' + '?' + this.buildQuery(config).join('&'));
+            let response = await Axios.get(this.baseUrl + '/parks' + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -48,21 +30,11 @@ module.exports = {
     },
 
     // Get specific park by uuid or null on failure
-    async getPark(uuid) {
+    async getPark(uuid, config = {}) {
         let result = null;
 
-        let query = [];
-        if (this.withAcl === true) {
-            query.push('acl=true');
-        }
-
-        let params = '';
-        if (query.length > 0) {
-            params = '?' + query.join('&');
-        }
-
         try {
-            let response = await Axios.get(this.baseUrl + '/parks/' + uuid + params);
+            let response = await Axios.get(this.baseUrl + '/parks/' + uuid + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -72,11 +44,13 @@ module.exports = {
     },
 
     // Get waiting times for specific park by uuid or null on failure
-    async getWaitingTimes(uuid) {
+    async getWaitingTimes(uuid, config = {}) {
         let result = null;
 
         try {
-            let response = await Axios.get(this.baseUrl + '/parks/' + uuid  + '/waiting-times');
+            let response = await Axios.get(
+                this.baseUrl + '/parks/' + uuid  + '/waiting-times' + this.buildQuery(config)
+            );
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -88,35 +62,16 @@ module.exports = {
     // Get attractions list by optional config or null on failure
     async getAttractions(config = {}) {
         let result = null;
-
-        // Set default config
-        config = _.merge(
-            {
-                park: null,
-                page: 1,
-                itemsPerPage: 12,
-                searchTerm: null,
-                sort: null,
-                filters: [],
-                facets: [],
-                founded: null,
-                regulation: {
-                    size: null,
-                    age: null
-                }
-            },
-            config
-        );
-
         let url = null;
-        if (config.park) {
-            url = this.baseUrl + '/parks/' + config.park + '/attractions' + '?' + this.buildQuery(config).join('&');
+
+        if (config.hasOwnProperty('park') && config.park) {
+            url = this.baseUrl + '/parks/' + config.park + '/attractions';
         } else {
-            url = this.baseUrl + '/attractions' + '?' + this.buildQuery(config).join('&');
+            url = this.baseUrl + '/attractions';
         }
 
         try {
-            let response = await Axios.get(this.baseUrl + '/attractions' + '?' + this.buildQuery(config).join('&'));
+            let response = await Axios.get(url + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -126,21 +81,11 @@ module.exports = {
     },
 
     // Get specific attraction by uuid or null on failure
-    async getAttraction(uuid) {
+    async getAttraction(uuid, config = {}) {
         let result = null;
 
-        let query = [];
-        if (this.withAcl === true) {
-            query.push('acl=true');
-        }
-
-        let params = '';
-        if (query.length > 0) {
-            params = '?' + query.join('&');
-        }
-
         try {
-            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid + params);
+            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -171,41 +116,65 @@ module.exports = {
     // Build query
     buildQuery(config) {
         let query = [];
-        query.push('page=' + encodeURIComponent(config.page));
-        query.push('itemsPerPage=' + encodeURIComponent(config.itemsPerPage));
 
-        if (config.searchTerm) {
+        if (config.hasOwnProperty('page') && config.page) {
+            query.push('page=' + encodeURIComponent(config.page));
+        }
+
+        if (config.hasOwnProperty('itemsPerPage') && config.itemsPerPage) {
+            query.push('itemsPerPage=' + encodeURIComponent(config.itemsPerPage));
+        }
+
+        if (config.hasOwnProperty('searchTerm') && config.searchTerm) {
             query.push('search=' + encodeURIComponent(config.searchTerm));
         }
 
-        if (config.sort) {
+        if (config.hasOwnProperty('language') && config.language) {
+            query.push('language=' + encodeURIComponent(config.language));
+        }
+
+        if (config.hasOwnProperty('sort') && config.sort) {
             query.push('sort=' + encodeURIComponent(config.sort));
         }
 
-        if (config.regulation.size !== null || config.regulation.age !== null) {
-            let size = (/^\d+$/.test(config.regulation.size)) ? config.regulation.size : 'null';
-            let age = (/^\d+$/.test(config.regulation.age)) ? config.regulation.age : 'null';
+        if (config.hasOwnProperty('regulation')) {
+            let regulation = _.merge(
+                {
+                    size: null,
+                    age: null
+                },
+                config.regulation
+            );
 
-            query.push('filter[]=' + encodeURIComponent(`regulation(${size},${age})`));
+            if (regulation.size !== null || regulation.age !== null) {
+                let size = (/^\d+$/.test(regulation.size)) ? regulation.size : 'null';
+                let age = (/^\d+$/.test(regulation.age)) ? regulation.age : 'null';
+
+                query.push('filter[]=' + encodeURIComponent(`regulation(${size},${age})`));
+            }
         }
 
-        config.facets.forEach(function (facet) {
-            query.push('facet[]=' + encodeURIComponent(facet));
-        });
+        if (config.hasOwnProperty('facets')) {
+            config.facets.forEach(function (facet) {
+                query.push('facet[]=' + encodeURIComponent(facet));
+            });
+        }
 
-        config.filters.forEach(function (filter) {
-            query.push('filter[]=' + encodeURIComponent(filter));
-        });
+        if (config.hasOwnProperty('filters')) {
+            config.filters.forEach(function (filter) {
+                query.push('filter[]=' + encodeURIComponent(filter));
+            });
+        }
 
-        if (config.founded !== null && (/^\d{4}$/.test(config.founded))) {
+        if (config.hasOwnProperty('founded') && config.founded !== null && (/^\d{4}$/.test(config.founded))) {
             let year = config.founded;
-            query.push('filter[]=' + encodeURIComponent(`founded:${year}0101000000 TO ${year}1231235959`));
+            query.push('filter[]=' + encodeURIComponent(`founded.year:${year}`));
         }
 
         if (this.withAcl === true) {
             query.push('acl=true');
         }
 
-        return query;
+        return query.length > 0 ? '?' + query.join('&') : '';
     }
 };

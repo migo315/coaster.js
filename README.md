@@ -35,7 +35,10 @@ capi.getParks(config).then(function (response) {
 });
 ```
 
-### Fetch "Movie Park Germany"
+### Fetch "Movie Park Germany" for german language
+You can use the "language" param for every GET request for fetching results in given language.
+Look at https://api.coaster.cloud which languages are supported.
+
 ```
 const capi = require("coaster.js");
 
@@ -43,7 +46,11 @@ const capi = require("coaster.js");
 // Every park and attraction has an unique id
 let parkUuid = 'a5fb81f1-cc4e-4a7e-8419-98cc523487e3';
 
-capi.getPark(parkUuid).then(function (response) {
+let config = {
+    language: 'de'
+};
+
+capi.getPark(parkUuid, config).then(function (response) {
     if (response !== null) {
         console.log(response.data.name);
     }
