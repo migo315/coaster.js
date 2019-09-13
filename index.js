@@ -14,6 +14,7 @@ const _ = require('lodash');
 module.exports = {
     baseUrl: 'https://api.coaster.cloud',
     withAcl: false,
+    language: 'en',
 
     // Get parks list by optional config or null on failure
     async getParks(config = {}) {
@@ -131,6 +132,8 @@ module.exports = {
 
         if (config.hasOwnProperty('language') && config.language) {
             query.push('language=' + encodeURIComponent(config.language));
+        } else {
+            query.push('language=' + encodeURIComponent(this.language));
         }
 
         if (config.hasOwnProperty('sort') && config.sort) {

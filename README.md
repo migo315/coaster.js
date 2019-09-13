@@ -57,6 +57,23 @@ capi.getPark(parkUuid, config).then(function (response) {
 });
 ```
 
+Instead of setting the language for each request, you can change the default language property:
+
+```
+const capi = require("coaster.js");
+capi.language = 'de';
+
+// That's the id of movie park at coaster.cloud
+// Every park and attraction has an unique id
+let parkUuid = 'a5fb81f1-cc4e-4a7e-8419-98cc523487e3';
+
+capi.getPark(parkUuid).then(function (response) {
+    if (response !== null) {
+        console.log(response.data.name);
+    }
+});
+```
+
 ### Fetching attractions from "Movie Park Germany"
 ```
 const capi = require("coaster.js");
