@@ -35,7 +35,7 @@ describe('Get Attractions', () => {
     });
   });
 
-  describe('when a successful request is made with an empty config', () => {
+  describe('when a successful request is made without config', () => {
     const expectedUrl = 'https://test/attractions';
 
     let response;
@@ -50,11 +50,8 @@ describe('Get Attractions', () => {
       expect(mockAxiosGet.mock.calls.length).toBe(1);
     });
 
-    it('calls axios with the expected url', () => {
+    it('calls axios with the expected url and returns the expected data', () => {
       expect(mockAxiosGet.mock.calls[0][0]).toEqual(expectedUrl);
-    });
-
-    it('returns the expected data', () => {
       expect(response).toEqual(stubbedData.data);
     });
   });
@@ -101,11 +98,8 @@ describe('Get Attractions', () => {
       response = await Client.getAttractions({ stubbed: 'config' });
     });
 
-    it('calls axios with the query appended to the url', () => {
+    it('console logs the error and returns null', () => {
       expect(console.error.mock.calls[0][0]).toEqual(stubbedError);
-    });
-
-    it('returns null', () => {
       expect(response).toEqual(null);
     });
   });

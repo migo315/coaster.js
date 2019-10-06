@@ -51,15 +51,9 @@ describe('Add Waiting Times', () => {
       expect(mockAxiosPost.mock.calls.length).toBe(1);
     });
 
-    it('calls axios with the queues data', () => {
+    it('calls axios with the queues data, auth headers and expected url', () => {
       expect(mockAxiosPost.mock.calls[0][1]).toEqual(stubbedQueues);
-    });
-
-    it('calls axios with the auth headers', () => {
       expect(mockAxiosPost.mock.calls[0][2]).toEqual(expectedConfig);
-    });
-
-    it('calls axios with the expected url', () => {
       expect(mockAxiosPost.mock.calls[0][0]).toEqual(expectedUrl);
     });
 
@@ -82,11 +76,8 @@ describe('Add Waiting Times', () => {
       response = await Client.addWaitingTimes();
     });
 
-    it('calls axios with the query appended to the url', () => {
+    it('console logs the error and returns false', () => {
       expect(console.error.mock.calls[0][0]).toEqual(stubbedError);
-    });
-
-    it('returns false', () => {
       expect(response).toEqual(false);
     });
   });
