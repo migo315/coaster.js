@@ -7,7 +7,7 @@ function parseBoolean(boolToParse) {
 }
 
 module.exports = {
-  baseUrl: process.env.BASE_URL,
-  withAcl: parseBoolean(process.env.ACL),
-  language: process.env.DEFAULT_LANGUAGE,
+  baseUrl: process.env.COASTER_BASE_URL,
+  withAcl: parseBoolean(process.env.COASTER_ACL),
+  language: process.env.COASTER_DEFAULT_LANGUAGE,
 };
