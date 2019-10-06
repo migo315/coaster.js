@@ -1,6 +1,13 @@
-const client = require('../src/client');
-
 const stubbedConfig = require('./test-data/stubbed-config');
+
+jest.mock('../config', () => {
+  return {
+    withAcl: false,
+    language: 'en',
+  };
+});
+const Client = require('../src/client');
+
 
 describe('Build Query', () => {
   describe('when a valid config is passed into buildQuery', () => {
@@ -10,7 +17,7 @@ describe('Build Query', () => {
     let result;
 
     beforeEach(() => {
-      result = client.buildQuery(stubbedConfig);
+      result = Client.buildQuery(stubbedConfig);
     });
 
     it('returns the expected query', () => {
@@ -22,7 +29,7 @@ describe('Build Query', () => {
     let result;
 
     beforeEach(() => {
-      result = client.buildQuery({});
+      result = Client.buildQuery({});
     });
 
     it('returns only the default language', () => {
@@ -44,7 +51,7 @@ describe('Build Query', () => {
     };
 
     beforeEach(() => {
-      result = client.buildQuery(invalidRegulationFields);
+      result = Client.buildQuery(invalidRegulationFields);
     });
 
     it('returns no regulation values', () => {
@@ -67,7 +74,7 @@ describe('Build Query', () => {
     };
 
     beforeEach(() => {
-      result = client.buildQuery(invalidRegulationFields);
+      result = Client.buildQuery(invalidRegulationFields);
     });
 
     it('returns regulation size as null', () => {
@@ -90,7 +97,7 @@ describe('Build Query', () => {
     };
 
     beforeEach(() => {
-      result = client.buildQuery(invalidRegulationFields);
+      result = Client.buildQuery(invalidRegulationFields);
     });
 
     it('returns regulation size as null', () => {
@@ -106,8 +113,8 @@ describe('Build Query', () => {
 
 
     beforeEach(() => {
-      client.withAcl = true;
-      result = client.buildQuery(stubbedConfig);
+      Client.withAcl = true;
+      result = Client.buildQuery(stubbedConfig);
     });
 
     it('returns the expected query', () => {

@@ -10,18 +10,17 @@
 // Imports
 const Axios = require('axios');
 const _ = require('lodash');
+const { baseUrl, withAcl, language } = require('../config');
 
 module.exports = {
-    baseUrl: 'https://api.coaster.cloud',
-    withAcl: false,
-    language: 'en',
+    withAcl,
 
     // Get parks list by optional config or null on failure
     async getParks(config = {}) {
         let result = null;
 
         try {
-            let response = await Axios.get(this.baseUrl + '/parks' + this.buildQuery(config));
+            let response = await Axios.get(baseUrl + '/parks' + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -35,7 +34,7 @@ module.exports = {
         let result = null;
 
         try {
-            let response = await Axios.get(this.baseUrl + '/parks/' + uuid + this.buildQuery(config));
+            let response = await Axios.get(baseUrl + '/parks/' + uuid + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -50,7 +49,7 @@ module.exports = {
 
         try {
             let response = await Axios.get(
-                this.baseUrl + '/parks/' + uuid  + '/waiting-times' + this.buildQuery(config)
+                baseUrl + '/parks/' + uuid  + '/waiting-times' + this.buildQuery(config)
             );
             result = response.data;
         } catch (error) {
@@ -66,9 +65,9 @@ module.exports = {
         let url = null;
 
         if (config.hasOwnProperty('park') && config.park) {
-            url = this.baseUrl + '/parks/' + config.park + '/attractions';
+            url = baseUrl + '/parks/' + config.park + '/attractions';
         } else {
-            url = this.baseUrl + '/attractions';
+            url = baseUrl + '/attractions';
         }
 
         try {
@@ -86,7 +85,7 @@ module.exports = {
         let result = null;
 
         try {
-            let response = await Axios.get(this.baseUrl + '/attractions/' + uuid + this.buildQuery(config));
+            let response = await Axios.get(baseUrl + '/attractions/' + uuid + this.buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -105,7 +104,7 @@ module.exports = {
         };
 
         try {
-            await Axios.post(this.baseUrl + '/parks/' + park + '/waiting-times', queues, config);
+            await Axios.post(baseUrl + '/parks/' + park + '/waiting-times', queues, config);
             result = true;
         } catch (error) {
             console.error(error)
@@ -133,7 +132,7 @@ module.exports = {
         if (config.hasOwnProperty('language') && config.language) {
             query.push('language=' + encodeURIComponent(config.language));
         } else {
-            query.push('language=' + encodeURIComponent(this.language));
+            query.push('language=' + encodeURIComponent(language));
         }
 
         if (config.hasOwnProperty('sort') && config.sort) {
