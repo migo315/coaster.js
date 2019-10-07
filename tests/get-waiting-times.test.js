@@ -4,7 +4,16 @@ jest.mock('axios', () => {
 });
 
 jest.mock('../config', () => {
-  return { baseUrl: 'https://test' };
+  return {
+    baseUrl: 'https://test',
+  };
+});
+
+const mockBuildQuery = jest.fn()
+jest.mock('../src/build-query', () => {
+  return {
+    buildQuery: mockBuildQuery,
+  };
 });
 
 global.console = {
@@ -41,8 +50,7 @@ describe('Get Waiting Times', () => {
     let response;
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '');
-
+      mockBuildQuery.mockReturnValueOnce('');
       response = await Client.getWaitingTimes('foo');
     });
 
@@ -60,8 +68,7 @@ describe('Get Waiting Times', () => {
     const expectedUrl = 'https://test/parks/foo/waiting-times?expected';
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '?expected');
-
+      mockBuildQuery.mockReturnValueOnce('?expected');
       await Client.getWaitingTimes('foo', { stubbed: 'config' });
     });
 
@@ -81,7 +88,7 @@ describe('Get Waiting Times', () => {
         throw new Error('some error');
       });
 
-      response = await Client.getWaitingTimes('foo', { stubbed: 'config' });
+      response = await Client.getWaitingTimes('foo', { park: 'config' });
     });
 
     it('console logs the error and returns null', () => {

@@ -11,6 +11,13 @@ global.console = {
   error: jest.fn(),
 }
 
+const mockBuildQuery = jest.fn()
+jest.mock('../src/build-query', () => {
+  return {
+    buildQuery: mockBuildQuery,
+  };
+});
+
 const Client = require('../src/client');
 
 describe('Get Attractions', () => {
@@ -41,8 +48,7 @@ describe('Get Attractions', () => {
     let response;
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '');
-
+      mockBuildQuery.mockReturnValueOnce('');
       response = await Client.getAttractions();
     });
 
@@ -60,8 +66,7 @@ describe('Get Attractions', () => {
     const expectedUrl = 'https://test/attractions?expected';
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '?expected');
-
+      mockBuildQuery.mockReturnValueOnce('?expected');
       await Client.getAttractions({ stubbed: 'config' });
     });
 
@@ -74,8 +79,7 @@ describe('Get Attractions', () => {
     const expectedUrl = 'https://test/parks/Phantasialand/attractions?expected';
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '?expected');
-
+      mockBuildQuery.mockReturnValueOnce('?expected');
       await Client.getAttractions({ stubbed: 'config', park: 'Phantasialand' });
     });
 

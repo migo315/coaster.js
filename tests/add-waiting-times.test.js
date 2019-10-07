@@ -13,6 +13,13 @@ global.console = {
 
 const stubbedToken = 'auth-token';
 
+const mockBuildQuery = jest.fn()
+jest.mock('../src/build-query', () => {
+  return {
+    buildQuery: mockBuildQuery,
+  };
+});
+
 const Client = require('../src/client');
 
 describe('Add Waiting Times', () => {
@@ -42,8 +49,7 @@ describe('Add Waiting Times', () => {
     let response;
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '');
-
+      mockBuildQuery.mockReturnValueOnce('');
       response = await Client.addWaitingTimes(stubbedToken, 'Phantasialand', stubbedQueues);
     });
 

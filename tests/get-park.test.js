@@ -11,6 +11,13 @@ global.console = {
   error: jest.fn(),
 }
 
+const mockBuildQuery = jest.fn()
+jest.mock('../src/build-query', () => {
+  return {
+    buildQuery: mockBuildQuery,
+  };
+});
+
 const Client = require('../src/client');
 
 describe('Get Park', () => {
@@ -32,8 +39,7 @@ describe('Get Park', () => {
     let response;
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '');
-
+      mockBuildQuery.mockReturnValueOnce('');
       response = await Client.getPark('foo');
     });
 
@@ -51,8 +57,7 @@ describe('Get Park', () => {
     const expectedUrl = 'https://test/parks/foo?expected';
 
     beforeEach(async () => {
-      jest.spyOn(Client, 'buildQuery').mockImplementation(() => '?expected');
-
+      mockBuildQuery.mockReturnValueOnce('?expected');
       await Client.getPark('foo', { stubbed: 'config' });
     });
 
