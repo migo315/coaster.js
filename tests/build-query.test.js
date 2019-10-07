@@ -1,19 +1,14 @@
 const stubbedConfig = require('./test-data/stubbed-config');
 
-const mockAcl = jest.fn();
 jest.mock('../config', () => {
   return {
     language: 'en',
   };
 });
 
-mockAcl.mockReturnValueOnce(false);
 const { buildQuery } = require('../src/build-query');
 
 describe('Build Query', () => {
-
-  beforeEach(() => jest.clearAllMocks());
-
   describe('when acl is false', () => {
     const stubbedAcl = false;
 
