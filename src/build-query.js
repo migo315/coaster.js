@@ -1,7 +1,6 @@
 const _ = require('lodash');
-const { language } = require('../config');
 
-const buildQuery = (config, withAcl) => {
+const buildQuery = (config) => {
   let query = [];
 
   if (config.hasOwnProperty('page') && config.page) {
@@ -18,8 +17,6 @@ const buildQuery = (config, withAcl) => {
 
   if (config.hasOwnProperty('language') && config.language) {
       query.push('language=' + encodeURIComponent(config.language));
-  } else {
-      query.push('language=' + encodeURIComponent(language));
   }
 
   if (config.hasOwnProperty('sort') && config.sort) {
@@ -58,10 +55,6 @@ const buildQuery = (config, withAcl) => {
   if (config.hasOwnProperty('founded') && config.founded !== null && (/^\d{4}$/.test(config.founded))) {
       let year = config.founded;
       query.push('filter[]=' + encodeURIComponent(`founded.year:${year}`));
-  }
-
-  if (withAcl === true) {
-      query.push('acl=true');
   }
 
   return query.length > 0 ? '?' + query.join('&') : '';
