@@ -1,32 +1,35 @@
 {
-  "name": "coaster.js",
-  "version": "0.0.14",
-  "description": "Javascript library for fetching data from https://coaster.cloud",
-  "main": "src/client.js",
-  "scripts": {
-    "build": "minify src/client.js --mangle.keepClassName --deadcode.keepFnArgs --outFile dist/client.min.js",
-    "test": "jest",
-    "test-coverage": "jest --collectCoverage --coverageReporters=text-lcov >> coverage.info"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/migo315/coaster.js.git"
-  },
-  "author": "Michel Chowanski",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/migo315/coaster.js/issues"
-  },
-  "homepage": "https://github.com/migo315/coaster.js#readme.md",
-  "dependencies": {
-    "axios": "^0.18.0",
-    "lodash": "^4.17.11"
-  },
-  "devDependencies": {
-    "babel-jest": "^24.9.0",
-    "babel-minify": "^0.5.1",
-    "babel-preset-es2015": "^6.24.1",
-    "coveralls": "^3.0.7",
-    "jest": "^24.9.0"
-  }
+    "name": "coaster.js",
+    "version": "0.0.14",
+    "description": "Javascript library for fetching data from https://coaster.cloud",
+    "main": "src/client.js",
+    "scripts": {
+        "build": "minify src/client.js --mangle.keepClassName --deadcode.keepFnArgs --outFile dist/client.min.js",
+        "test": "jest",
+        "test-coverage": "jest --collectCoverage --coverageReporters=text-lcov >> coverage.info",
+        "lint": "./node_modules/.bin/eslint src/**/*.js tests/.",
+        "lint-fix": "./node_modules/.bin/eslint src/**/*.js tests/. --fix"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/migo315/coaster.js.git"
+    },
+    "author": "Michel Chowanski",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/migo315/coaster.js/issues"
+    },
+    "homepage": "https://github.com/migo315/coaster.js#readme.md",
+    "dependencies": {
+        "axios": "^0.18.0",
+        "lodash": "^4.17.11"
+    },
+    "devDependencies": {
+        "babel-jest": "^24.9.0",
+        "babel-minify": "^0.5.1",
+        "babel-preset-es2015": "^6.24.1",
+        "coveralls": "^3.0.7",
+        "eslint": "^6.5.1",
+        "jest": "^24.9.0"
+    }
 }
