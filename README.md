@@ -4,6 +4,9 @@ official [coaster.cloud](https://coaster.cloud) api.
 
 This library is currently in early development. Contribution is welcome.
 
+[![npm version](https://badge.fury.io/js/coaster.js.svg)](https://badge.fury.io/js/coaster.js)
+[![Coverage Status](https://coveralls.io/repos/github/migo315/coaster.js/badge.svg?branch=master)](https://coveralls.io/github/migo315/coaster.js?branch=master)
+
 ## Installation
 ```
 yarn add coaster.js
