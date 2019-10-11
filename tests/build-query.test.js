@@ -5,7 +5,7 @@ const { buildQuery } = require('../src/build-query');
 describe('Build Query', () => {
   describe('when a valid config is passed into buildQuery', () => {
     const expectedQuery =
-      '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(182%2C26)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist';
+      '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(182%2C26)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist&filter[]=founded.year%3A2010';
 
     let result;
 
@@ -32,7 +32,7 @@ describe('Build Query', () => {
 
   describe('when a config is passed with invalid regulation fields', () => {
     const expectedQueryNoRegulationValues =
-      '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist';
+      '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist&filter[]=founded.year%3A2010';
 
     let result;
 
@@ -54,7 +54,7 @@ describe('Build Query', () => {
 
   describe('when a config is passed with a non-numeric regulation size', () => {
     const expectedQueryRegulationSizeNull =
-      '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(null%2C26)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist';
+      '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(null%2C26)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist&filter[]=founded.year%3A2010';
 
     let result;
 
@@ -77,7 +77,7 @@ describe('Build Query', () => {
 
   describe('when a config is passed with a non-numeric regulation age', () => {
     const expectedQueryRegulationAgeNull =
-    '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(182%2Cnull)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist';
+    '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(182%2Cnull)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist&filter[]=founded.year%3A2010';
 
     let result;
 
@@ -95,6 +95,26 @@ describe('Build Query', () => {
 
     it('returns regulation size as null', () => {
       expect(result).toEqual(expectedQueryRegulationAgeNull);
+    });
+  });
+
+  describe('when a config is passed with a non-numeric founded year', () => {
+    const expectedQueryFoundedYearNull =
+        '?page=98&itemsPerPage=99&search=soup&language=Gaelic&sort=Ascending&filter[]=regulation(182%2C26)&facet[]=facets&facet[]=exist&filter[]=filters&filter[]=exist';
+
+    let result;
+
+    const invalidRegulationFields = {
+      ...stubbedConfig,
+      founded: ['founders', 'exist'],
+    };
+
+    beforeEach(() => {
+      result = buildQuery(invalidRegulationFields);
+    });
+
+    it('returns founded year as null', () => {
+      expect(result).toEqual(expectedQueryFoundedYearNull);
     });
   });
 });

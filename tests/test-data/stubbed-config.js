@@ -10,5 +10,5 @@ module.exports = {
   },
   facets: ['facets','exist'],
   filters: ['filters', 'exist'],
-  founded: ['founders', 'exist'],
+  founded: 2010,
 };
