@@ -9,7 +9,7 @@
 
 // Imports
 const Axios = require('axios');
-const { baseUrl, withAcl } = require('../config');
+const { baseUrl } = require('../config');
 const { buildQuery } = require('./build-query');
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
         let result = null;
 
         try {
-            let response = await Axios.get(baseUrl + '/parks' + buildQuery(config, withAcl));
+            let response = await Axios.get(baseUrl + '/parks' + buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -33,7 +33,7 @@ module.exports = {
         let result = null;
 
         try {
-            let response = await Axios.get(baseUrl + '/parks/' + uuid + buildQuery(config, withAcl));
+            let response = await Axios.get(baseUrl + '/parks/' + uuid + buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -48,7 +48,7 @@ module.exports = {
 
         try {
             let response = await Axios.get(
-                baseUrl + '/parks/' + uuid  + '/waiting-times' + buildQuery(config, withAcl)
+                baseUrl + '/parks/' + uuid  + '/waiting-times' + buildQuery(config)
             );
             result = response.data;
         } catch (error) {
@@ -70,7 +70,7 @@ module.exports = {
         }
 
         try {
-            let response = await Axios.get(url + buildQuery(config, withAcl));
+            let response = await Axios.get(url + buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
@@ -84,7 +84,7 @@ module.exports = {
         let result = null;
 
         try {
-            let response = await Axios.get(baseUrl + '/attractions/' + uuid + buildQuery(config, withAcl));
+            let response = await Axios.get(baseUrl + '/attractions/' + uuid + buildQuery(config));
             result = response.data;
         } catch (error) {
             console.error(error)
