@@ -22,7 +22,7 @@ module.exports = {
             let response = await Axios.get(baseUrl + '/parks' + buildQuery(config));
             result = response.data;
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
         return result;
@@ -36,7 +36,7 @@ module.exports = {
             let response = await Axios.get(baseUrl + '/parks/' + uuid + buildQuery(config));
             result = response.data;
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
         return result;
@@ -48,11 +48,11 @@ module.exports = {
 
         try {
             let response = await Axios.get(
-                baseUrl + '/parks/' + uuid  + '/waiting-times' + buildQuery(config)
+                baseUrl + '/parks/' + uuid + '/waiting-times' + buildQuery(config)
             );
             result = response.data;
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
         return result;
@@ -73,7 +73,7 @@ module.exports = {
             let response = await Axios.get(url + buildQuery(config));
             result = response.data;
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
         return result;
@@ -87,7 +87,7 @@ module.exports = {
             let response = await Axios.get(baseUrl + '/attractions/' + uuid + buildQuery(config));
             result = response.data;
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
         return result;
@@ -106,7 +106,7 @@ module.exports = {
             await Axios.post(baseUrl + '/parks/' + park + '/waiting-times', queues, config);
             result = true;
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
         return result;
