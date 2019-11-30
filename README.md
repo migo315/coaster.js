@@ -1,8 +1,12 @@
-# Coaster.Cloud Javascript SDK
-This is a javascript library for fetching attraction and themepark data from the
-official [coaster.cloud](https://coaster.cloud) api.
+# Coaster.Cloud Javascript SDK (Legacy / Unsupported)
 
-This library is currently in early development. Contribution is welcome.
+**UNSUPPORTED**: This library is not used anymore. The legacy REST API is removed for the new and more flexible **Open Coaster Interface**.
+This library is only for historical reasons public but don't work anymore.
+
+Please use [Open Coaster Interface](https://github.com/migo315/open-coaster-interface) for fetching parks and attractions data.
+
+~~This is a javascript library for fetching attraction and themepark data from the
+official [coaster.cloud](https://coaster.cloud) api.~~
 
 [![npm version](https://badge.fury.io/js/coaster.js.svg)](https://badge.fury.io/js/coaster.js)
 [![Coverage Status](https://coveralls.io/repos/github/migo315/coaster.js/badge.svg?branch=master)](https://coveralls.io/github/migo315/coaster.js?branch=master)
